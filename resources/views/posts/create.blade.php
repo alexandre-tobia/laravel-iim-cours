@@ -6,8 +6,6 @@
 
         <input class="@error('title') border-red-600 @enderror" placeholder="Titre" type="text" name="title" value="{{ old('title') }}"/>
 
-        <input placeholder="Admin ?" type="text" name="is_admin" value="test"/>
-
         @error('title')
          <p class="text-red-500 text-xs">{{ $message }}</p>
         @enderror
