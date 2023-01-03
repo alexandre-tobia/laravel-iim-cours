@@ -21,7 +21,9 @@ class ArticleController extends Controller
 
     public function show($slug)
     {
+        $post = Post::where('slug', $slug)->first();
 
+        return view('posts.show', ['post' => $post]);
     }
 
     public function store(Request $request)
