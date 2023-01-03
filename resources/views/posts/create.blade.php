@@ -3,7 +3,6 @@
 @section('content')
     <form class="flex flex-col gap-4" action="{{ route('article.store') }}" method="POST">
         @csrf
-        @method('PUT')
 
         <input class="@error('title') border-red-600 @enderror" placeholder="Titre" type="text" name="title" value="{{ old('title') }}"/>
 
