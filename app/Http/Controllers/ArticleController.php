@@ -43,16 +43,35 @@ class ArticleController extends Controller
 
     public function edit($slug)
     {
-        dd($slug);
+        $post = Post::where('slug', $slug)->first();
+
+        return view('posts.edit', ['post' => $post]);
     }
 
     public function update(Request $request, $slug)
     {
+        $post = Post::where('slug', $slug)->first();
 
+        $request->validate([
+            'title'       => 'required',
+            'slug'        => 'required|unique:posts,slug,' . $post->id,
+            'description' => 'required',
+        ]);
+
+        $inputs = $request->only(['title', 'slug', 'description', 'enabled']);
+
+        $inputs['enabled'] = isset($inputs['enabled']) ? 1 : 0;
+
+       $post->update($inputs);
+
+        return redirect()->route('article.index')->with('success', 'Article modifié !' );
     }
 
     public function delete($slug)
     {
+        $post = Post::where('slug', $slug)->first();
+        $post->delete();
 
+        return redirect()->back();
     }
 }
