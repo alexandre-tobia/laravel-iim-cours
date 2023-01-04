@@ -26,6 +26,10 @@ Route::prefix('articles')->name('article.')->group(function () {
     Route::get('/{slug}/edit', [\App\Http\Controllers\ArticleController::class, 'edit'])->name('edit');
     Route::put('/{slug}', [\App\Http\Controllers\ArticleController::class, 'update'])->name('update');
     Route::delete('/{slug}', [\App\Http\Controllers\ArticleController::class, 'delete'])->name('delete');
+
+    Route::middleware('auth')->group(function() {
+        Route::post('/{slug}/comments', [\App\Http\Controllers\CommentController::class, 'store'])->name('comment.store');
+    });
 });
 
 
