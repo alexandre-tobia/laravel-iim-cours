@@ -29,6 +29,10 @@ Route::prefix('articles')->name('article.')->group(function () {
 
     Route::middleware('auth')->group(function() {
         Route::post('/{slug}/comments', [\App\Http\Controllers\CommentController::class, 'store'])->name('comment.store');
+        Route::delete('/{slug}/comments/{id}', [\App\Http\Controllers\CommentController::class, 'delete'])
+            ->name('comment.delete')
+            ->middleware('isAdmin')
+        ;
     });
 });
 

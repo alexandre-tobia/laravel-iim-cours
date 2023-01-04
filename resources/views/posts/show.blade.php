@@ -19,7 +19,7 @@
     @auth
         @include('posts.comments.form')
     @else
-       <p class="text-gray-400">Vous devez être connecté pour laisser un commentaire...</p>
+        <p class="text-gray-400">Vous devez être connecté pour laisser un commentaire...</p>
     @endauth
 
     <hr class="my-4">
@@ -28,8 +28,14 @@
         @forelse($post->comments as $comment)
             <div class="border border-gray-400 p-4">
                 <p>{{$comment->content}}</p>
+
                 <span class="text-sm italic text-gray-400 mt-4 block">Publié par: {{$comment->user->name}}</span>
+
+                @auth
+                    @includeWhen(auth()->user()->isAdmin(), 'posts.comments.form-delete')
+                @endauth
             </div>
+
         @empty
             <p class="text-sm">Aucun commentaire</p>
         @endforelse

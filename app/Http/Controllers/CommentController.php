@@ -18,10 +18,19 @@ class CommentController extends Controller
 
         Comment::create([
             'content' => $request->get('content'),
-            'user_id'  => auth()->user()->id,
-            'post_id'  => $post->id
+            'user_id' => auth()->user()->id,
+            'post_id' => $post->id
         ]);
 
         return redirect()->back()->with('commentSuccess', 'Commentaire publié !');
+    }
+
+    public function delete($slug, $id)
+    {
+        $comment = Comment::findOrFail($id);
+
+        $comment->delete();
+
+        return redirect()->back();
     }
 }
